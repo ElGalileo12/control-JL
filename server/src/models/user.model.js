@@ -6,9 +6,9 @@ export async function findUserByEmail(email) {
 
   try {
     const result = await pool.query(query, values);
-    return result.rows[0];
+    return result.rows[0] || null;
   } catch (error) {
-    console.error("❌ Error al buscar usuario por email:", error);
+    console.error("Error al buscar usuario por email:", error);
     throw error;
   }
 }
