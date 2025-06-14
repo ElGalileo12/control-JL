@@ -53,3 +53,27 @@ export async function endJornadaController(req, res) {
       .json({ message: "Error al finalizar jornada", error: error.message });
   }
 }
+
+export async function getJornadasController(req, res) {
+  const userId = req.user.id;
+  const { from, to } = req.query;
+
+  const filters = { userId };
+
+  if (from && to) {
+    filters.date = { $gte: from, $lte: to };
+  } else if (from) {
+    filters.date = { $gte: from };
+  } else if (to) {
+    filters.date = { $lte: to };
+  }
+
+  try {
+    const jornadas = await Checkin.find(filters).sort({ date: -1 });
+    res.status(200).json(jornadas);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error al obtener jornadas", error: error.message });
+  }
+}
