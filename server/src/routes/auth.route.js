@@ -1,8 +1,13 @@
 import { Router } from "express";
-import { getUserByEmailController } from "../controllers/auth.controller.js";
+import {
+  getUserByEmailController,
+  loginController,
+} from "../controllers/auth.controller.js";
 
 const router = Router();
 
 router.get("/user/:email", getUserByEmailController);
+
+router.post("/login", loginController);
 
 export default router;
