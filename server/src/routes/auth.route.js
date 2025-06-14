@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { testAuthController } from "../controllers/auth.controller.js";
+import { getUserByEmailController } from "../controllers/auth.controller.js";
 
 const router = Router();
 
-router.get("/test", testAuthController);
+router.get("/user/:email", getUserByEmailController);
 
 export default router;
