@@ -1,5 +1,6 @@
 import app from "./app.js";
 import { pool } from "./config/db.js";
+import { connectMongoDB } from "./config/mongodb.js";
 
 const PORT = process.env.PORT;
 
@@ -11,3 +12,5 @@ pool
   .connect()
   .then(() => console.log("Conectado a PostgreSQL"))
   .catch((err) => console.error("Error al conectar con PostgreSQL:", err));
+
+await connectMongoDB();
