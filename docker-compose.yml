@@ -1,6 +1,28 @@
-version: "3.9"
+version: "4.9"
 
 services:
+  frontend:
+    build: ./client
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./server
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./server/.env
+    environment:
+      - PORT=8080
+      - JWT_SECRET=supersecret
+      - POSTGRES_URL=postgres://postgres:postgres@postgres:5432/control_jornada
+      - MONGODB_URI=mongodb://mongo:27017/control_jornada_mongo
+    depends_on:
+      - postgres
+      - mongo
+
   postgres:
     image: postgres:15
     container_name: postgres_jornada
