@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 
-const password = "user123";
+const plain = "admin123";
+const hash = "$2b$10$LC6qvSJSDd7trgnUAVcKSeZjm0UNSE5vdu0wLRPrn4JFS3mC0CSIW"; // el nuevo que generaste
 
-bcrypt.hash(password, 10).then((hash) => {
-  console.log("Nuevo hash:", hash);
-});
+const match = await bcrypt.compare(plain, hash);
+console.log("¿Coincide?", match); // Debe decir true
