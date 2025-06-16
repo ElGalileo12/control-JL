@@ -1,13 +1,23 @@
-import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
+export default function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-4xl font-bold text-red-600">
-        Frontend con Tailwind 🔥
-      </h1>
-    </div>
+    <main>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+    </main>
   );
 }
-
-export default App;
