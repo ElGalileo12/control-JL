@@ -35,8 +35,8 @@ Asegúrate de que los puertos 5173, 3000, 5432 y 27017 estén libres en tu máqu
 
 ## Usuarios de ejemplo
 
-empleado1@empresa.com | admin123 |
-empleado2@empresa.com | user123 |
+usuario 1: empleado1@empresa.com contraseña: admin123 
+usuario 2: empleado2@empresa.com contraseña: user123 
 
 ## URLs de los servicios
 
