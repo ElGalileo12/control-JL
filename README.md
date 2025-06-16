@@ -11,7 +11,7 @@ Aplicación full stack para el control de jornada laboral, desarrollada como par
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/usuario/proyecto-control-jornada.git
+git clone https://github.com/ElGalileo12/control-JL.git
 cd proyecto-control-jornada
 ```
 
