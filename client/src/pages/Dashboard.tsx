@@ -7,6 +7,7 @@ import {
   iniciarJornada,
   finalizarJornada,
 } from "../actions/jornada.actions";
+import { getJornadasPorRango } from "../actions/jornada.actions";
 
 export type Jornada = {
   _id: string;
@@ -20,6 +21,8 @@ export default function Dashboard() {
   const [jornadas, setJornadas] = useState<Jornada[]>([]);
   const [jornadaHoy, setJornadaHoy] = useState<Jornada | null>(null);
   const [loading, setLoading] = useState(true);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
 
   useEffect(() => {
     cargarJornadaHoy();
@@ -66,6 +69,16 @@ export default function Dashboard() {
     }
   };
 
+  const filtrarPorRango = async () => {
+    if (!fromDate || !toDate) return alert("Selecciona un rango válido");
+    try {
+      const data = await getJornadasPorRango(fromDate, toDate, token);
+      setJornadas(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Registro de jornada laboral</h1>
@@ -98,6 +111,33 @@ export default function Dashboard() {
         </div>
       )}
 
+      <div className="flex items-center gap-4 mb-4">
+        <div>
+          <label className="block text-sm">Desde</label>
+          <input
+            type="date"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+            className="border px-2 py-1 rounded"
+          />
+        </div>
+        <div>
+          <label className="block text-sm">Hasta</label>
+          <input
+            type="date"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+            className="border px-2 py-1 rounded"
+          />
+        </div>
+        <button
+          onClick={filtrarPorRango}
+          className="self-end bg-gray-700 text-white px-4 py-2 rounded h-fit"
+        >
+          Aplicar filtro
+        </button>
+      </div>
+
       <h2 className="text-xl font-semibold mb-2">Historial</h2>
       <table className="w-full text-left border-collapse">
         <thead>
@@ -105,20 +145,32 @@ export default function Dashboard() {
             <th className="p-2 border">Fecha</th>
             <th className="p-2 border">Hora de inicio</th>
             <th className="p-2 border">Hora de fin</th>
+            <th className="p-2 border">Horas trabajadas</th>
           </tr>
         </thead>
+
         <tbody>
-          {jornadas.map((j) => (
-            <tr key={j._id} className="border-t">
-              <td className="p-2 border">{j.date}</td>
-              <td className="p-2 border">
-                {j.startTime ? dayjs(j.startTime).format("HH:mm") : "—"}
-              </td>
-              <td className="p-2 border">
-                {j.endTime ? dayjs(j.endTime).format("HH:mm") : "—"}
-              </td>
-            </tr>
-          ))}
+          {jornadas.map((j) => {
+            const horas =
+              j.startTime && j.endTime
+                ? dayjs(j.endTime).diff(dayjs(j.startTime), "minute") / 60
+                : null;
+
+            return (
+              <tr key={j._id} className="border-t">
+                <td className="p-2 border">{j.date}</td>
+                <td className="p-2 border">
+                  {j.startTime ? dayjs(j.startTime).format("HH:mm") : "—"}
+                </td>
+                <td className="p-2 border">
+                  {j.endTime ? dayjs(j.endTime).format("HH:mm") : "—"}
+                </td>
+                <td className="p-2 border">
+                  {horas !== null ? `${horas.toFixed(2)} h` : "—"}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
