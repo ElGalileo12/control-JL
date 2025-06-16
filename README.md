@@ -1,54 +1,58 @@
-# React + TypeScript + Vite
+# 📋 Control de Jornada Laboral
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación full stack para el control de jornada laboral, desarrollada como parte de una prueba técnica. Utiliza React (Vite) para el frontend, Express con Node.js para el backend, PostgreSQL para la gestión de usuarios y MongoDB para registrar los fichajes de entrada/salida.
 
-Currently, two official plugins are available:
+## 🚀 Cómo ejecutar el proyecto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Requisitos previos
 
-## Expanding the ESLint configuration
+- Tener [Docker](https://www.docker.com/) y [Docker Compose](https://docs.docker.com/compose/) instalados.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. Clonar el repositorio
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+git clone https://github.com/usuario/proyecto-control-jornada.git
+cd proyecto-control-jornada
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Levantar los servicios con Docker Compose
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+docker-compose up --build -d
 ```
+
+Esto iniciará automáticamente:
+
+frontend: Aplicación React con Vite servida por Nginx.
+
+backend: API REST con Express.
+
+postgres: Base de datos para usuarios.
+
+mongo: Base de datos para los fichajes (entradas/salidas).
+
+Asegúrate de que los puertos 5173, 3000, 5432 y 27017 estén libres en tu máquina.
+
+## Usuarios de ejemplo
+
+empleado1@empresa.com | admin123 |
+empleado2@empresa.com | user123 |
+
+## URLs de los servicios
+
+Frontend: http://localhost:5173
+Backend (API): http://localhost:3000/api/v1
+PostgreSQL: localhost:5432
+MongoDB: localhost:27017
+
+## Apagar los servicios
+
+```bash
+docker compose down -v --rmi all
+```
+
+## Notas adicionales
+
+La autenticación se realiza mediante JWT, guardando el token en localStorage.
+El sistema está preparado para registrar el fichaje de entrada y salida por cada usuario.
+Se pueden filtrar por días los registros realizados.
