@@ -1,5 +1,3 @@
-version: "4.9"
-
 services:
   frontend:
     build: ./client
@@ -12,13 +10,9 @@ services:
     build: ./server
     ports:
       - "8080:8080"
+    restart: always
     env_file:
-      - ./server/.env
-    environment:
-      - PORT=8080
-      - JWT_SECRET=supersecret
-      - POSTGRES_URL=postgres://postgres:postgres@postgres:5432/control_jornada
-      - MONGODB_URI=mongodb://mongo:27017/control_jornada_mongo
+      - ./server/.env.docker
     depends_on:
       - postgres
       - mongo
@@ -30,10 +24,11 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: control_jornada
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: control_jl
     volumes:
+      - ./server/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
       - pgdata:/var/lib/postgresql/data
 
   mongo:
