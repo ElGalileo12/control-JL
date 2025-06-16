@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { UserIcon, LockClosedIcon } from "@heroicons/react/24/solid";
+import bgOficina from "../assets/oficina.jpg";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -28,7 +29,7 @@ export default function Login() {
         alert(data.message || "Credenciales inválidas");
       }
     } catch (error) {
-      alert("Error al conectar con el servidor");
+      setError("Contraseña incorrecta");
     }
   };
 
@@ -36,7 +37,10 @@ export default function Login() {
     <>
       <section
         className="min-h-screen bg-cover bg-center flex items-center justify-center p-4"
-        style={{ backgroundImage: "url('src/assets/oficina.jpg')" }}
+        style={{
+          backgroundImage: `url(${bgOficina})`,
+          backgroundSize: "cover",
+        }}
       >
         <div className="relative z-20 bg-white bg-opacity-90 max-w-lg w-full rounded-2xl shadow-lg p-8 text-center space-y-6">
           <div>
