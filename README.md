@@ -42,8 +42,11 @@ usuario 2: empleado2@empresa.com contraseña: user123
 ## URLs de los servicios
 
 Frontend: http://localhost:5173
+
 Backend (API): http://localhost:3000/api/v1
+
 PostgreSQL: localhost:5432
+
 MongoDB: localhost:27017
 
 ## Apagar los servicios
