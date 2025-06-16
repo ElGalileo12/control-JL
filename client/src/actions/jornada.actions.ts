@@ -43,3 +43,16 @@ export async function finalizarJornada(token: string) {
   });
   if (!res.ok) throw new Error("Error al finalizar jornada");
 }
+
+export async function getJornadasPorRango(
+  from: string,
+  to: string,
+  token: string
+) {
+  const url = `http://localhost:8080/api/v1/jornada?from=${from}&to=${to}`;
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Error al filtrar jornadas");
+  return res.json();
+}
