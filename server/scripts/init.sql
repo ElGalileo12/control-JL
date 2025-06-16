@@ -12,5 +12,9 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Insertar usuarios de prueba
 INSERT INTO users (name, email, password, role) VALUES
-  ('Usuario 1', 'usuario1@example.com', '$2a$10$EF7tKjrlkxQCTbyHzKep9ew2O/.zh9jUgyqw2rhHRqQLANdcxTSS2', 'user 1'),
-  ('Usuario 2', 'usuario2@example.com', '$2a$10$WczqAtj4Fyl4U.mC.RCCoOzyKCGkzPSmTKzJ9nmuMWd8PMtEU/UiG', 'user 2');
+  ('Usuario 1', 'usuario1@example.com', '$2a$10$EF7tKjrlkxQCTbyHzKep9ew2O/.zh9jUgyqw2rhHRqQLANdcxTSS2', 'user'),
+  ('Usuario 2', 'usuario2@example.com', '$2a$10$WczqAtj4Fyl4U.mC.RCCoOzyKCGkzPSmTKzJ9nmuMWd8PMtEU/UiG', 'user');
+
+
+-- contraseña Usuario 1: admin123
+-- contraseña Usuario 2: user123
